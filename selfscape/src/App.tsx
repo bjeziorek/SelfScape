@@ -3,6 +3,10 @@ import { useState, useCallback } from 'react'
 
 import { ReactFlow, applyNodeChanges, applyEdgeChanges, addEdge, ReactFlowProvider, Background, Controls, type EdgeChange, type NodeChange } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
+import Menu from './components/Menu';
+import { MapNode } from './components/MapNode';
+import { BasicNode } from './components/BasicNode';
+import { Node3d } from './components/Node3d';
 
 interface NodeChangeType {
   id: string;
@@ -15,12 +19,17 @@ interface NodeChangeType {
     label: string;
   };
 }
-// const nodeTypes = { mapNode: MapNode, }
+
+const nodeTypes = {
+  mapNode: MapNode,
+  basicNode: BasicNode,
+  node3d: Node3d,
+}
 
 const initialNodes = [
   {
     id: '1',
-    type: 'mapNode',
+    type: 'basicNode',
     position: { x: 200, y: 100 },
     data: {
       label: 'Node 1'
@@ -34,6 +43,14 @@ const initialNodes = [
       label: 'Node 2'
     },
   },
+    {
+    id: '3',
+    type: 'node3d',
+    position: { x: 300, y: 400 },
+    data: {
+      label: 'Node 3'
+    },
+  },
 ]
 
 const initialEdges: any[] = [];
@@ -43,7 +60,6 @@ function App() {
   const [nodes, setNodes] = useState(initialNodes)
   const [edges, setEdges] = useState(initialEdges)
 
-  // const onConnect = useCallback( (params: any) => setEdges((eds) => addEdge(params, eds)), [] );
   const onNodesChange = useCallback(
     (changes: NodeChange<NodeChangeType>[]) => setNodes((nodesSnapshot) => applyNodeChanges(changes, nodesSnapshot)),
     [],
@@ -92,24 +108,19 @@ nodes={nodes} edges={edges} onConnect={onConnect} nodeTypes={nodeTypes} nodesDra
 
 
       {/* </div> */}
-     <div
-     style={{
-      width: '100vw',
-      height: '10vh',
-      background: 'darkblue'
-     }}
-     ></div>
-    
-        <div style={{ width: '100vw', height: '90vh' }}>
-          <ReactFlow
-            nodes={nodes}
-            edges={edges}
-            onNodesChange={onNodesChange}
-            onEdgesChange={onEdgesChange}
-            onConnect={onConnect}
-            fitView
-          />
-        </div>
+      <Menu></Menu>
+
+      <div style={{ width: '100vw', height: '90vh' }}>
+        <ReactFlow
+          nodes={nodes}
+          edges={edges}
+          onNodesChange={onNodesChange}
+          onEdgesChange={onEdgesChange}
+          onConnect={onConnect}
+          nodeTypes={nodeTypes}
+          fitView
+        />
+      </div>
     </>
   )
 }

@@ -1,28 +1,35 @@
-// import { Handle, Position } from 'reactflow';
+import { Handle, Position } from "@xyflow/react";
+import { useCallback } from "react";
 
-// interface MapNodeProps {
-//   data: { label: string };
-// }
+export function MapNode({ data, isConnectable }) {
+    const onChange = useCallback((evt: { target: { value: any; }; }) => {
+        console.log(evt.target.value);
+    }, []);
 
-// export default function MapNode({ data }: MapNodeProps) {
-//   return (
-//     <div
-//       className="p-4 bg-base-200 rounded-lg shadow-md border border-base-300"
-//       style={{ pointerEvents: 'auto' }}
-//     >
-//       <div className="font-semibold">{data.label}</div>
-
-//       <Handle
-//         type="target"
-//         position={Position.Top}
-//         style={{ width: 10, height: 10, background: '#555' }}
-//       />
-
-//       <Handle
-//         type="source"
-//         position={Position.Bottom}
-//         style={{ width: 10, height: 10, background: '#555' }}
-//       />
-//     </div>
-//   );
-// }
+    return (
+        <>
+        <div style={{border:'solid red 1px'}}>
+            <Handle
+                type="target"
+                position={Position.Left}
+                onConnect={(params) => console.log('handle onConnect', params)}
+                isConnectable={isConnectable}
+            />
+            <div>
+                Custom Color Picker Node: <strong>{data.color}</strong>
+            </div>
+            <input
+                className="nodrag"
+                type="color"
+                onChange={data.onChange}
+                defaultValue={data.color}
+            />
+            <Handle
+                type="source"
+                position={Position.Right}
+                isConnectable={isConnectable}
+            />
+            </div>
+        </>
+    );
+}

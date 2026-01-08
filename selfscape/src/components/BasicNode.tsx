@@ -4,12 +4,15 @@ export function BasicNode(props) {
   const onChange = useCallback((evt: { target: { value: any; }; }) => {
     console.log(evt.target.value);
   }, []);
- 
+
   return (
-    <div className="text-updater-node">
-      <div>
-        <label htmlFor="text">Text:</label>
-        <input id="text" name="text" onChange={onChange} className="nodrag" />
+    <div className="card bg-primary text-primary-content w-96">
+      <div className="card-body">
+        <h2 className="card-title">Card title!</h2>
+        <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
+        <div className="card-actions justify-end">
+          <button className="btn">Buy Now</button>
+        </div>
       </div>
     </div>
   );

@@ -6,7 +6,7 @@ export default function Menu() {
         <div
             style={{
                 width: '100vw',
-                height: '10vh',
+                height: '20vh',
                 background: 'darkblue'
             }}
         >

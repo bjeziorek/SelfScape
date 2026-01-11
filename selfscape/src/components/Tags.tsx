@@ -1,12 +1,19 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { TagsContext } from "../providers/TagsContext";
 
 export default function Tags() {
 
     const { tags, setTags } = useContext(TagsContext);
 
-    const clickTag=x=>{
-        console.log('hsajdgvajdva', x)
+    const { sendSignal } = useContext(TagsContext); 
+    
+    const [selectedTags, setSelectedTags] = useState<string[]>(tags);
+
+
+    const clickTag=tag=>{
+        console.log('hsajdgvajdva', tag)
+        sendSignal({ tag: "urgent" });
+        setSelectedTags(selectedTags => selectedTags.includes(tag) ? selectedTags.filter(t => t !== tag) : [...selectedTags, tag] );
     }
 
     return (
@@ -17,7 +24,8 @@ export default function Tags() {
         >
              {tags.map((tag, index) => (
         <button 
-        className="badge badge-primary" 
+        className={`badge badge-primary ${selectedTags.includes(tag) ? "line-through" : ""}`}
+       
         key={index}
         onClick={() => clickTag(tag)}
         >{tag}</button>

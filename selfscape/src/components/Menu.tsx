@@ -1,3 +1,5 @@
+import Tags from "./Tags";
+
 export default function Menu() {
 
     return (
@@ -9,6 +11,7 @@ export default function Menu() {
             }}
         >
             <button className="btn primary">Add node</button>
+            <Tags></Tags>
         </div>
     )
 }
